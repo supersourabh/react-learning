@@ -1,10 +1,9 @@
 import { useParams } from "react-router-dom";
-import "./App.css";
 
 function About() {
   const { id } = useParams();
 
-  return <div>About Page : {id}</div>;
+  return <h1>About Page  {id}</h1>
 }
 
 export default About;

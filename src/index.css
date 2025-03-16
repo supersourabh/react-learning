@@ -66,3 +66,22 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+li {
+  list-style-type: none;
+}
+
+a.active{
+  color: green;
+}
+
+.nav-container{
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav-container div{
+  padding: 10px;
+}
