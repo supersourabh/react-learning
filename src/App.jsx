@@ -1,35 +1,48 @@
-import { useCallback, useMemo, useState, useDeferredValue, Suspense, useEffect, useId, useReducer, useRef, Profiler, useActionState } from 'react'
-import './App.css'
-import { ThemeContext } from './contexts'
-import Test from './test';
-
+import {
+  useCallback,
+  useMemo,
+  useState,
+  useDeferredValue,
+  Suspense,
+  useEffect,
+  useId,
+  useReducer,
+  useRef,
+  Profiler,
+  useActionState,
+} from "react";
+import "./App.css";
+import { ThemeContext } from "./contexts";
+import Test from "./test";
+import { useFormStatus } from "react-dom";
 
 function App() {
-  console.log('rendered');
-  
+  console.log("rendered");
 
-  function increment(prevState, formData){
-    console.log(formData.get("name"));
-    return prevState + 1;
+  async function submit(e) {
+    await fetch("https://jsonplaceholder.typicode.com/todos/1");
+    new Promise((resolve, reject) => {
+      return resolve("hello");
+    });
   }
 
-  const [ number ,action , isPending] = useActionState(increment, 0);
   return (
-    <form>
-      {isPending ? "Loading...": number} <br />
-      <input  type="text" name='name' value="Sourabh" /> <br />
-      <button formAction={action}>
-        Click me
-      </button>
+    <form action={submit}>
+      <input type="text" name="name" /> <br/>
+      <Submit />
     </form>
   );
 }
 
-export default App
+export default App;
 
-const Loading = () => {
+const Submit = () => {
+  const { pending, data, method, action } = useFormStatus();
+
   return (
-    <h1>Loading...</h1>
-  )
-}
-
+    <>
+      <button>{pending ? method.toUpperCase() + ": Pending" : "Submit"}</button>
+      <h3>Data is : {data}</h3>
+    </>
+  );
+};
