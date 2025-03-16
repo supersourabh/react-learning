@@ -1,48 +1,34 @@
-import {
-  useCallback,
-  useMemo,
-  useState,
-  useDeferredValue,
-  Suspense,
-  useEffect,
-  useId,
-  useReducer,
-  useRef,
-  Profiler,
-  useActionState,
-} from "react";
+import { Link, Route, Routes } from "react-router-dom";
+import About from "./about";
 import "./App.css";
-import { ThemeContext } from "./contexts";
-import Test from "./test";
-import { useFormStatus } from "react-dom";
+import Contact from "./Contact";
+import Home from "./Home";
 
 function App() {
-  console.log("rendered");
-
-  async function submit(e) {
-    await fetch("https://jsonplaceholder.typicode.com/todos/1");
-    new Promise((resolve, reject) => {
-      return resolve("hello");
-    });
-  }
-
   return (
-    <form action={submit}>
-      <input type="text" name="name" /> <br/>
-      <Submit />
-    </form>
+    <>
+      <nav>
+        <ul>
+          <Link to="/">
+            <li>Home </li>
+          </Link>
+          <Link to="/about">
+            <li>about </li>
+          </Link>
+          <Link to="/contact">
+            <li>contact </li>
+          </Link>
+        </ul>
+      </nav>
+      <div>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+        </Routes>
+      </div>
+    </>
   );
 }
 
 export default App;
-
-const Submit = () => {
-  const { pending, data, method, action } = useFormStatus();
-
-  return (
-    <>
-      <button>{pending ? method.toUpperCase() + ": Pending" : "Submit"}</button>
-      <h3>Data is : {data}</h3>
-    </>
-  );
-};
